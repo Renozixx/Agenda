@@ -1,0 +1,46 @@
+/meu_projeto_laravel
+│
+├── /app
+│   ├── /Console
+│   ├── /Exceptions
+│   ├── /Http
+│   │   ├── /Controllers
+│   │   ├── /Middleware
+│   └── /Models
+│
+├── /bootstrap
+├── /config
+├── /database
+│   ├── /factories
+│   ├── /migrations
+│   └── /seeders
+│
+├── /public
+│   ├── index.php
+│   └── /css
+│
+├── /resources
+│   ├── /lang
+│   ├── /views
+│   └── /css
+│
+├── /routes
+│   ├── web.php
+│   └── api.php
+│
+├── /storage
+│   ├── /app
+│   ├── /framework
+│   └── /logs
+│
+├── /tests
+│   ├── /Feature
+│   └── /Unit
+│
+├── /vendor
+│
+├── artisan
+├── composer.json
+├── .env
+├── .gitignore
+└── README.md
