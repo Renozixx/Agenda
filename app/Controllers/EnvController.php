@@ -13,8 +13,9 @@ class Env {
         foreach ($v as $k => $valor)
         {
             $arr = explode("=", $valor);
-            $this->envFile[$arr[0]] = $arr[1];
+            $this->envFile[$arr[0]] = trim($arr[1]);
         }
         return $this->envFile;
     }
+    
 }
