@@ -1,5 +1,7 @@
 <?php
-class Env {
+
+namespace app\Controllers;
+class EnvController {
     public $envFile = [];
     public function getEnvFile(): array
     {

@@ -1,5 +1,12 @@
 <?php
-require_once "./database/database.php";
+require_once "./autoloader.php";
 
-$db = new Database();
-echo $db->openConnection();
+use app\Models\Cadastro;
+
+$db = new Cadastro();
+$db->create("users", [
+    "NOME" => "hugo",
+    "EMAIL" => "hugo@gmail.com",
+    "TELEFONE" => "1299999999",
+    "SENHA" => "123",
+]);

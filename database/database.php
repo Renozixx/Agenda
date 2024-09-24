@@ -1,26 +1,28 @@
 <?php
-require_once "./app/Controllers/EnvController.php";
-class Database extends Env {
+
+namespace database;
+
+require_once "./autoloader.php";
+
+use mysqli;
+use app\Controllers\EnvController;
+class Database extends EnvController {
     protected $env;
     protected $mysqli;
 
     public function getEnv ()
     {
-        $this->env = new Env();
-        return $this->env->getEnvFile();
+        return $this->env = $this->getEnvFile();
     }
 
-    public function openConnection ()
+    private function openConnection ()
     {
         $varDB = $this->getEnvFile();
         $varDBHOST = $varDB["DB_HOSTNAME"];
         $varDBUSER = $varDB["DB_USERNAME"];
         $varDBPASS = $varDB["DB_PASSWORD"];
         $varDBNAME = $varDB["DB_NAME"];
-        // var_dump($varDB);
-        // var_dump($varDBHOST, $varDBUSER, $varDBPASS, $varDBNAME);
         $this->mysqli = new mysqli($varDBHOST, $varDBUSER, $varDBPASS, $varDBNAME);
-
         if ($this->mysqli->connect_errno)
         {
             return $this->mysqli->connect_error;
@@ -30,23 +32,18 @@ class Database extends Env {
         }
     }
 
-    public function insert (string $table, array $dados)
+    protected function insert (string $table, string $colunas, string $valores)
     {
-        $colunas = [];
-        $valores = [];
-        foreach ($dados as $k => $v)
-        {
-            $colunas[] = $k;
-            $valores[] = chr(39)."$v".chr(39);
-        }
-        $colunas = implode(", ", $colunas);
-        $valores = implode(", ", $valores);
+        $this->openConnection();
+
         $query = "INSERT INTO $table (".$colunas.") VALUES (".$valores.")";
         var_dump($query);
         $this->mysqli->query($query);
+
+        $this->closeConnection();
     }
 
-    public function closeConnection ()
+    private function closeConnection ()
     {
         if($this->mysqli->close())
         {
