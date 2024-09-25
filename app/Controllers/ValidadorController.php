@@ -5,6 +5,8 @@ use Exception;
 
 require_once "./autoloader.php";
 
+// Esse validador serve para validar campos, se o cara colocar por exemplo, uma sena 12345, o que está fora dos nossos
+// parametros de segurança, 
 class ValidatorController {
     private $msg = [];
     private $error;
@@ -24,7 +26,7 @@ class ValidatorController {
         }
         if ($this->error) $this->throwError();
     }
-
+    
     private function throwError () // Trata os erros de forma simples
     {
         $msg = "";

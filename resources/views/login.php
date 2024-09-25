@@ -9,11 +9,3 @@
     
 </body>
 </html> -->
-<?php
-require_once "./database/database.php";
-
-$db = new Database();
-$db->connect();
-foreach ($db->connect() as $key => $value) {
-    echo $key.": ".$value."<br>";
-}

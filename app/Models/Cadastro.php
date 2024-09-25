@@ -6,6 +6,7 @@ require_once "./database/database.php";
 
 use app\Controllers\CadastroController;
 use app\Controllers\ValidatorController;
+
 class Cadastro extends CadastroController{
 
     public function create (string $table, array $dados) // Método para inserir um usuário à base de dados e principalmente tratar e validar esse dados
