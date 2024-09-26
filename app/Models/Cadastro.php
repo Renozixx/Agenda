@@ -2,9 +2,10 @@
 
 namespace app\Models;
 
-require_once "./database/database.php";
+require_once "./autoloader.php";
 
 use app\Controllers\CadastroController;
+use app\Controllers\ValidadorController;
 use app\Controllers\ValidatorController;
 
 class Cadastro extends CadastroController{
@@ -18,7 +19,7 @@ class Cadastro extends CadastroController{
             $colunas[] = $k;
             $valores[$k] = chr(39)."$v".chr(39);
         }
-        $val = new ValidatorController();
+        $val = new ValidadorController();
         $val->validate([ // Método para fazer a validação de campos (qualquer).
             str_replace("'", "", $valores["TELEFONE"]) => "max:10",
             str_replace("'", "", $valores["SENHA"]) => "min:6",

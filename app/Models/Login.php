@@ -2,10 +2,10 @@
 
 namespace app\Models;
 
-require_once "./database/database.php";
+require_once "./autoloader.php";
 
 use app\Controllers\CadastroController;
-use app\Controllers\ValidatorController;
+use app\Controllers\ValidadorController;
 
 class Login extends CadastroController {
 

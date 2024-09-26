@@ -1,13 +1,13 @@
 <?php
 namespace app\Controllers;
 
-use Exception;
-
 require_once "./autoloader.php";
+
+use Exception;
 
 // Esse validador serve para validar campos, se o cara colocar por exemplo, uma sena 12345, o que está fora dos nossos
 // parametros de segurança, 
-class ValidatorController {
+class ValidadorController {
     private $msg = [];
     private $error;
 
