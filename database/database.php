@@ -6,6 +6,8 @@ require_once "./autoloader.php";
 
 use mysqli;
 use app\Controllers\EnvController;
+use Exception;
+
 class Database extends EnvController {
     protected $env;
     protected $mysqli;
@@ -37,18 +39,29 @@ class Database extends EnvController {
     // A classe em sí podem acessar ele
     protected function select (string $colunas, string $table, string $parametros = "")
     {
-        $this->openConnection();
-        $query = "SELECT $colunas FROM $table $parametros";
-        $result = $this->mysqli->query($query);
-        $this->closeConnection();
-        if ($result->num_rows > 0)
+        try
         {
+            $this->openConnection();
+            $query = "SELECT $colunas FROM $table $parametros";
+            $result = $this->mysqli->query($query);
+            $this->closeConnection();
             return $result->fetch_all();
-        }
-        else
+        }catch (Exception $e)
         {
-            return "Erro ao executar o select";
+            return $result = TRUE;
         }
+        // $this->openConnection();
+        // $query = "SELECT $colunas FROM $table $parametros";
+        // $result = $this->mysqli->query($query);
+        // $this->closeConnection();
+        // if ($result->num_rows > 0)
+        // {
+        //     return $result->fetch_all();
+        // }
+        // else
+        // {
+        //     return "Erro ao executar o select";
+        // }
     }
     protected function insert (string $table, string $colunas, string $valores)
     {
