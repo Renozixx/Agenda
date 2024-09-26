@@ -109,7 +109,7 @@ class ValidadorController {
             case "required":
                 if (strlen($valor) == 0)
                 {
-                    $this->msg[] = "O campo $valor não é obrigatório";
+                    $this->msg[] = "O campo $valor é obrigatório";
                     $this->error = TRUE;
                 }
                 break;

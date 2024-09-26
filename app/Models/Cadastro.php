@@ -22,9 +22,10 @@ class Cadastro extends CadastroController{
         }
         $val = new ValidadorController();
         $val->validate([ // Método para fazer a validação de campos (qualquer).
-            str_replace("'", "", $valores["EMAIL"]) => "mail",
-            str_replace("'", "", $valores["TELEFONE"]) => "max:10",
-            str_replace("'", "", $valores["SENHA"]) => "min:6",
+            str_replace("'", "", $valores["NOME"]) => "required",
+            str_replace("'", "", $valores["EMAIL"]) => "mail,required",
+            str_replace("'", "", $valores["TELEFONE"]) => "max:11,required",
+            str_replace("'", "", $valores["SENHA"]) => "min:6,required",
         ]);
         $result = $this->select($colunas['EMAIL'], "users", " WHERE ".$colunas['EMAIL']." = ".$valores["EMAIL"]);
         print_r($result);
@@ -35,8 +36,7 @@ class Cadastro extends CadastroController{
         }
         $colunas = implode(", ", $colunas);
         $valores = implode(", ", $valores);
-        echo "OI";
-        // $this->createUser($table, $colunas, $valores);
+        $this->createUser($table, $colunas, $valores);
     }
 
     public function __debugInfo ()
