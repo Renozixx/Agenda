@@ -11,6 +11,6 @@ require_once "./autoloader.php";
     <link rel="stylesheet" href="./public/css/index.css">
 </head>
 <?php require_once "./resources/views/components/headers/header.php"; ?>
-<body class="bg-slate-950">
+<body class="min-h-screen bg-slate-950">
 </body>
 </html>

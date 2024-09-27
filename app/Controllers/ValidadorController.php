@@ -8,7 +8,7 @@ use Exception;
 // Esse validador serve para validar campos, se o cara colocar por exemplo, uma sena 12345, o que está fora dos nossos
 // parametros de segurança, 
 class ValidadorController {
-    private $msg = [];
+    protected $msg = [];
     private $error;
 
     public function validate ($valor)
@@ -24,17 +24,7 @@ class ValidadorController {
                 $this->error = TRUE;
             }
         }
-        if ($this->error) $this->throwError();
-    }
-    
-    private function throwError () // Trata os erros de forma simples
-    {
-        $msg = "";
-        foreach ($this->msg as $v)
-        {
-            $msg .= $v.". ";
-        }
-        throw new Exception("$msg"); // Joga uma excesão
+        if ($this->error) return $this->msg;
     }
 
     private function processRule ($valor, $rule)
