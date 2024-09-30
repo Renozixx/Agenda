@@ -27,7 +27,7 @@ if(count($_POST) != 0)
 
         <div class="flex flex-col gap-0.5">
             <label for="email">Email</label>
-            <input type="text" name="email" id="email" class="p-0.5 text-black rounded-sm">
+            <input type="email" name="email" id="email" class="p-0.5 text-black rounded-sm">
         </div>
 
         <div class="flex flex-col gap-0.5">
@@ -41,9 +41,9 @@ if(count($_POST) != 0)
         </div>
 
         <button type="submit" class="w-max mx-auto py-1 px-12 bg-slate-500 rounded-sm">Cadastrar</button>
-        <div class="erros">
+        <div class="erros flex flex-col gap-1 justify-center">
             <?php
-            if ($cadastro)
+            if (isset($cadastro))
             {
                 foreach ($cadastro as $v)
                 {
