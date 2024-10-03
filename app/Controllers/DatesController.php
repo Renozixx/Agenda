@@ -21,7 +21,7 @@ class DatesController {
     public function getCurrentDate ()
     {
         return [
-            "day"=>date("d"),
+            "day"=>date("j"),
             "month"=>date("m"),
             "year"=>date("Y"),
         ];
