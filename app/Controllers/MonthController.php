@@ -12,30 +12,78 @@ class MonthController {
         $this->date = new DatesController;
     }
 
-    public function genElements ()
+    public function genElement ()
     {
-        $currentDay = $this->date->getCurrentDate();
-        $months = $this->date->getCurrentMonths();
-        $daysMonth = $this->date->getDaysInCurrentMonths([$currentDay["month"]]);
-        $dayWeek = $this->date->getDayFirstWeekMonth($months);
+        return $this->genMonth();
+    }
+
+    private function genDays ($month, $qtd)
+    {
+        $currentDate = $this->date->getCurrentDate();
+        $currentDay = $currentDate["day"];
+        $currentMonth = $currentDate["month"];
+        $currentYear = $currentDate["year"];
+
         $element = "";
-        var_dump($daysMonth);
+        for ($i=1; $i<=$qtd; $i++)
+        {
+            $class = "day flex justify-center items-center w-full h-full rounded hover:bg-slate-500";
+            if ($month == $currentMonth and $i == $currentDay) $class .= " bg-slate-600";
+            $class .= " cursor-pointer ease-in-out duration-75";
+
+            $element  .= "<div class='$class'>$i</div>";
+        }
+        return $element;
+    }
+
+    private function genWeekDays ()
+    {
+        $daysWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+        $elements = "";
+        for ($i=0; $i<=6; $i++)
+        {
+            $elements .= "<div>". $daysWeek[$i] ."</div>";
+        }
+        return $elements;
+    }
+
+    private function genMonth ()
+    {
+        $currentDate = $this->getDateUrl();
+        $month = $currentDate["month"];
+        $daysMonth = $this->date->getDaysInCurrentMonths([$month]);
+        $month = $this->date->months[$currentDate["month"]-1];
+        $dayWeek = $this->date->getDayFirstWeekMonth([$month]);
+        
+        $element = "";
         foreach ($daysMonth as $k => $d)
         {
-            $element .= "<div class='month grid justify-items-center items-center gap-4 h-full p-3 bg-slate-800 rounded-sm aspect-square'>";
+            $class = "month grid justify-items-center items-center gap-4 h-full p-3 bg-slate-800 rounded-sm";
+
+            $element .= "<div class='$class'>";
+            $element .= $this->genWeekDays();
             for ($i=0; $i<$dayWeek[$k]; $i++)
             {
                 $element .= "<div class=''></div>";
             }
-            for ($i=1; $i<=$d; $i++)
-            {
-                $class = "day flex justify-center items-center w-full rounded-full hover:bg-slate-500";
-                if ($k == $currentDay["month"] and $i == $currentDay["day"]) $class .= " bg-slate-600";
-                $class .= " cursor-pointer ease-in-out duration-75 aspect-square";
-                $element  .= "<form action='/resources/views/month.php' method='post' class='w-full'> <input type='hidden' name='y' value=".$currentDay["year"]."> <input type='hidden' name='m' value='$k'> <input type='hidden' name='d' value='$i'> <button type='submit' class='$class'>$i</button> </form>";
-            }
+            $element .= $this->genDays($month, $d);
             $element .= "</div>";
         }
         return $element;
+    }
+
+    private function getDateUrl ()
+    {
+        $uri = $_SERVER["REQUEST_URI"];
+        if (strstr($uri, ".php"))
+        {
+            $date = explode(".php/", $uri)[1];
+            $date = explode("/", $date);
+            return [
+                "day" => $date[2],
+                "month" => $date[1],
+                "year" => $date[0],
+            ];
+        }
     }
 }

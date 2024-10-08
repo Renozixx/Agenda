@@ -12,8 +12,12 @@ $homepage = new HomePageController;
     <title>Home</title>
     <link rel="stylesheet" href="/public/css/index.css">
     <link rel="stylesheet" href="/public/css/site.css">
+    <script src="/public/js/index.js"></script>
 </head>
 <?php require_once "./resources/views/components/headers/header.php"; ?>
+<script>
+    const redirect = new Redirect();
+</script>
 <body class="bg-slate-950 text-white">
     <main>
         <div class="year grid gap-3 w-max p-3 m-auto">

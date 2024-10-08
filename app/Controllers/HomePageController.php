@@ -14,25 +14,45 @@ class HomePageController {
 
     public function genElements ()
     {
-        $currentDay = $this->date->getCurrentDate();
+        return $this->genMonths();
+    }
+
+    private function genDays ($month, $qtd)
+    {
+        $currentDate = $this->date->getCurrentDate();
+        $currentDay = $currentDate["day"];
+        $currentMonth = $currentDate["month"];
+        $currentYear = $currentDate["year"];
+        
+        $element = "";
+        for ($i=1; $i<=$qtd; $i++)
+        {
+            $class = "day flex justify-center items-center w-full rounded-full hover:bg-slate-500";
+            if ($month == $currentMonth and $i == $currentDay) $class .= " bg-slate-600";
+            $class .= " cursor-pointer ease-in-out duration-75 aspect-square";
+
+            $element  .= "<div class='$class' onclick='redirect.sendGET(`http://localhost:8000/resources/views/month.php`, [".$currentYear.", ".$month.", ".$i."])'>$i</div>";
+        }
+        return $element;
+    }
+
+    private function genMonths ()
+    {
         $months = $this->date->getCurrentMonths();
         $daysMonth = $this->date->getDaysInCurrentMonths($months);
-        $dayWeek = $this->date->getDayFirstWeekMonth($months);
+        $dayWeek = $this->date->getDayFirstWeekMonth($this->date->months);
+        
         $element = "";
         foreach ($daysMonth as $k => $d)
         {
-            $element .= "<div class='month grid justify-items-center items-center gap-1 w-max p-3 bg-slate-800 rounded-sm'>";
+            $class = "month grid justify-items-center items-center gap-1 w-max p-3 bg-slate-800 rounded-sm";
+            $element .= "<div class='$class'>";
             for ($i=0; $i<$dayWeek[$k]; $i++)
             {
                 $element .= "<div class=''></div>";
             }
-            for ($i=1; $i<=$d; $i++)
-            {
-                $class = "day flex justify-center items-center w-full rounded-full hover:bg-slate-500";
-                if ($k == $currentDay["month"] and $i == $currentDay["day"]) $class .= " bg-slate-600";
-                $class .= " cursor-pointer ease-in-out duration-75 aspect-square";
-                $element  .= "<form action='/resources/views/month.php' method='post' class='w-full'> <input type='hidden' name='y' value=".$currentDay["year"]."> <input type='hidden' name='m' value='$k'> <button type='submit' class='$class'>$i</button> </form>";
-            }
+            
+            $element .= $this->genDays($k+1, $d);
             $element .= "</div>";
         }
         return $element;

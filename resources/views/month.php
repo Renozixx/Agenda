@@ -1,5 +1,4 @@
 <?php
-var_dump($_POST);
 require_once "./autoloader.php";
 use app\Controllers\MonthController;
 $month = new MonthController;
@@ -13,12 +12,16 @@ $month = new MonthController;
     <title>Grupo 4A</title>
     <link rel="stylesheet" href="/public/css/index.css">
     <link rel="stylesheet" href="/public/css/site.css">
+    <script src="/public/js/index.js"></script>
 </head>
 <?php require_once "./resources/views/components/headers/header.php"; ?>
-<body class="bg-slate-950 text-white">
-    <main>
-        <div class="content w-max h-full m-auto">
-            <?php echo $month->genElements(); ?>
+<script>
+    const redirect = new Redirect();
+</script>
+<body class="flex flex-col h-screen bg-slate-950 text-white">
+    <main class="h-full">
+        <div class="content h-full m-auto">
+            <?php echo $month->genElement(); ?>
         </div>
     </main>
 </body>

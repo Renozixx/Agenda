@@ -4,7 +4,7 @@ namespace app\Controllers;
 use DateTime;
 
 class DatesController {
-    private $months = [
+    public $months = [
         "January",
         "February",
         "March",
@@ -27,7 +27,7 @@ class DatesController {
         ];
     }
 
-    public function getCurrentMonths ()
+    public function getCurrentMonths () // Retorna um array de inteiros
     {
         $months = [];
         foreach ($this->months as $v)
@@ -50,9 +50,9 @@ class DatesController {
     public function getDayFirstWeekMonth (array $months)
     {
         $weeks = [];
-        foreach ($this->months as $v)
+        foreach ($months as $v)
         {
-            $weeks[] = intval(date("w", strtotime("01"."$v ".$this->getCurrentDate()["year"])));
+            $weeks[] = intval(date("w", strtotime("01"." $v ".$this->getCurrentDate()["year"])));
         }
         return $weeks;
     }
