@@ -30,7 +30,6 @@ class HomePageController {
             $class = "day flex justify-center items-center w-full rounded-full hover:bg-slate-500";
             if ($month == $currentMonth and $i == $currentDay) $class .= " bg-slate-600";
             $class .= " cursor-pointer ease-in-out duration-75 aspect-square";
-
             $element  .= "<div class='$class' onclick='redirect.sendGET(`http://localhost:8000/resources/views/month.php`, [".$currentYear.", ".$month.", ".$i."])'>$i</div>";
         }
         return $element;
@@ -47,11 +46,7 @@ class HomePageController {
         {
             $class = "month grid justify-items-center items-center gap-1 w-max p-3 bg-slate-800 rounded-sm";
             $element .= "<div class='$class'>";
-            for ($i=0; $i<$dayWeek[$k]; $i++)
-            {
-                $element .= "<div class=''></div>";
-            }
-            
+            for ($i=0; $i<$dayWeek[$k]; $i++) $element .= "<div class=''></div>";
             $element .= $this->genDays($k+1, $d);
             $element .= "</div>";
         }

@@ -22,7 +22,6 @@ class MonthController {
         $currentDate = $this->date->getCurrentDate();
         $currentDay = $currentDate["day"];
         $currentMonth = $currentDate["month"];
-        $currentYear = $currentDate["year"];
 
         $element = "";
         for ($i=1; $i<=$qtd; $i++)
@@ -30,7 +29,6 @@ class MonthController {
             $class = "day flex justify-center items-center w-full h-full rounded hover:bg-slate-500";
             if ($month == $currentMonth and $i == $currentDay) $class .= " bg-slate-600";
             $class .= " cursor-pointer ease-in-out duration-75";
-
             $element  .= "<div class='$class'>$i</div>";
         }
         return $element;
@@ -38,34 +36,30 @@ class MonthController {
 
     private function genWeekDays ()
     {
-        $daysWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+        $daysWeek = array_map(function ($v){
+            return substr($v, 0, 3);
+        }, $this->date->daysWeek);
+
         $elements = "";
-        for ($i=0; $i<=6; $i++)
-        {
-            $elements .= "<div>". $daysWeek[$i] ."</div>";
-        }
+        foreach ($daysWeek as $d) $elements .= "<div>".$d."</div>";
         return $elements;
     }
 
     private function genMonth ()
     {
         $currentDate = $this->getDateUrl();
-        $month = $currentDate["month"];
+        $month = $currentDate["month"]; // Pega o mês na forma de número
         $daysMonth = $this->date->getDaysInCurrentMonths([$month]);
-        $month = $this->date->months[$currentDate["month"]-1];
+        $month = $this->date->months[$currentDate["month"]]; // Pega o mês na forma escrita
         $dayWeek = $this->date->getDayFirstWeekMonth([$month]);
         
         $element = "";
         foreach ($daysMonth as $k => $d)
         {
             $class = "month grid justify-items-center items-center gap-4 h-full p-3 bg-slate-800 rounded-sm";
-
             $element .= "<div class='$class'>";
             $element .= $this->genWeekDays();
-            for ($i=0; $i<$dayWeek[$k]; $i++)
-            {
-                $element .= "<div class=''></div>";
-            }
+            for ($i=0; $i<$dayWeek[$k]; $i++) $element .= "<div class=''></div>";
             $element .= $this->genDays($month, $d);
             $element .= "</div>";
         }
