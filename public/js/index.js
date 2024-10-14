@@ -1,11 +1,6 @@
 class Redirect {
-    sendGET (url = "/", dados = [])
+    sendGET (url = "/")
     {
-        let newDados = ""
-        dados.forEach(element => {
-            newDados = newDados +"/"+ element
-        });
-        console.log(newDados)
-        window.location.href = url + newDados
+        window.location.href = url
     }
 }

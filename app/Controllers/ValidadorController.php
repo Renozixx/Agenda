@@ -3,8 +3,6 @@ namespace app\Controllers;
 
 require_once "./autoloader.php";
 
-use Exception;
-
 // Esse validador serve para validar campos, se o cara colocar por exemplo, uma sena 12345, o que está fora dos nossos
 // parametros de segurança, 
 class ValidadorController {
@@ -15,15 +13,14 @@ class ValidadorController {
     {
         foreach ($valor as $value => $rule)
         {
-            if (!is_array($value)) // Verifica se o valor a ser validado não é um array
-            {
-                $this->processRule($value, $rule);
-            }else
+            if (!is_array($value)) $this->processRule($value, $rule); // Verifica se o valor a ser validado não é um array
+            else
             {
                 $this->msg[] = "Nenhum valor deve ser um array.";
                 $this->error = TRUE;
             }
         }
+        
         if ($this->error) return $this->msg;
     }
 
@@ -37,10 +34,7 @@ class ValidadorController {
             {
                 $this->handleRule($valor, $vr);
             }
-        }else // Ou se há apena 1 regra de validação
-        {
-            $this->handleRule($valor, $rule);
-        }
+        }else $this->handleRule($valor, $rule); // Ou se há apena 1 regra de validação
     }
 
     private function handleRule ($valor, $rule)
@@ -51,10 +45,7 @@ class ValidadorController {
             $validador = $rule[0];
             $validadorValor = $rule[1];
             $this->switchRules($valor, $validador, $validadorValor);
-        }else
-        {
-            $this->switchRules($valor, $rule);
-        }
+        }else $this->switchRules($valor, $rule);
     }
 
     private function switchRules ($valor, $validador, $valueValidador="") // Método para exibir e tratar cada regra de validação. Aqui podemos criar diversas regras

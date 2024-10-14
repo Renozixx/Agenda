@@ -43,13 +43,7 @@ if(count($_POST) != 0)
         <button type="submit" class="w-max mx-auto py-1 px-12 bg-slate-500 rounded-sm">Cadastrar</button>
         <div class="erros flex flex-col gap-1 justify-center">
             <?php
-            if (isset($cadastro))
-            {
-                foreach ($cadastro as $v)
-                {
-                    echo "<p class='mx-auto'>$v</p><br>";
-                }
-            }
+            if (isset($cadastro)) foreach ($cadastro as $v) echo "<p class='mx-auto'>$v</p><br>";
             ?>
         </div>
     </fieldset>

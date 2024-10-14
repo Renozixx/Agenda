@@ -1,8 +1,10 @@
 <?php
 require_once "./autoloader.php";
 use app\Controllers\HomePageController;
+use app\Controllers\DatesController;
 
-$homepage = new HomePageController;
+$dateControler = new DatesController();
+$homepage = new HomePageController($dateControler);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

@@ -1,7 +1,10 @@
 <?php
 require_once "./autoloader.php";
 use app\Controllers\MonthController;
-$month = new MonthController;
+use app\Controllers\DatesController;
+
+$datesController = new DatesController();
+$month = new MonthController($datesController);
 ?>
 
 <!DOCTYPE html>

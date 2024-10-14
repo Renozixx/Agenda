@@ -2,14 +2,15 @@
 namespace app\Controllers;
 require_once "./autoloader.php";
 
-use app\Controllers\DatesController;
-
 class MonthController {
-    private $date;
+    private const DAY_CLASS = "day flex justify-center items-center w-full h-full rounded hover:bg-slate-500 cursor-pointer ease-in-out duration-75";
+    private const MONTH_CLASS = "month grid justify-items-center items-center gap-4 h-full p-3 bg-slate-800 rounded-sm";
 
-    public function __construct ()
+    private DatesController $datesController;
+
+    public function __construct (DatesController $datesController)
     {
-        $this->date = new DatesController;
+        $this->datesController = $datesController;
     }
 
     public function genElement ()
@@ -19,16 +20,14 @@ class MonthController {
 
     private function genDays ($month, $qtd)
     {
-        $currentDate = $this->date->getCurrentDate();
+        $currentDate = $this->datesController->getCurrentDate();
         $currentDay = $currentDate["day"];
-        $currentMonth = $currentDate["month"];
-
+        $currentMonth = $this->datesController->months[$currentDate["month"]-1];
         $element = "";
         for ($i=1; $i<=$qtd; $i++)
         {
-            $class = "day flex justify-center items-center w-full h-full rounded hover:bg-slate-500";
+            $class = self::DAY_CLASS;
             if ($month == $currentMonth and $i == $currentDay) $class .= " bg-slate-600";
-            $class .= " cursor-pointer ease-in-out duration-75";
             $element  .= "<div class='$class'>$i</div>";
         }
         return $element;
@@ -38,7 +37,7 @@ class MonthController {
     {
         $daysWeek = array_map(function ($v){
             return substr($v, 0, 3);
-        }, $this->date->daysWeek);
+        }, $this->datesController->daysWeek);
 
         $elements = "";
         foreach ($daysWeek as $d) $elements .= "<div>".$d."</div>";
@@ -49,17 +48,17 @@ class MonthController {
     {
         $currentDate = $this->getDateUrl();
         $month = $currentDate["month"]; // Pega o mês na forma de número
-        $daysMonth = $this->date->getDaysInCurrentMonths([$month]);
-        $month = $this->date->months[$currentDate["month"]]; // Pega o mês na forma escrita
-        $dayWeek = $this->date->getDayFirstWeekMonth([$month]);
+        $daysMonth = $this->datesController->getDaysInCurrentMonths([$month]);
+        $month = $this->datesController->months[$currentDate["month"]-1]; // Pega o mês na forma escrita
+        $dayWeek = $this->datesController->getDayFirstWeekMonth([$month]);
         
         $element = "";
         foreach ($daysMonth as $k => $d)
         {
-            $class = "month grid justify-items-center items-center gap-4 h-full p-3 bg-slate-800 rounded-sm";
+            $class = self::MONTH_CLASS;
             $element .= "<div class='$class'>";
             $element .= $this->genWeekDays();
-            for ($i=0; $i<$dayWeek[$k]; $i++) $element .= "<div class=''></div>";
+            $element .= str_repeat("<div class=''></div>", $dayWeek[$k]);
             $element .= $this->genDays($month, $d);
             $element .= "</div>";
         }
@@ -71,12 +70,12 @@ class MonthController {
         $uri = $_SERVER["REQUEST_URI"];
         if (strstr($uri, ".php"))
         {
-            $date = explode(".php/", $uri)[1];
-            $date = explode("/", $date);
+            $datesController = explode(".php/", $uri)[1];
+            $datesController = explode("/", $datesController);
             return [
-                "day" => $date[2],
-                "month" => $date[1],
-                "year" => $date[0],
+                "day" => $datesController[2],
+                "month" => $datesController[1],
+                "year" => $datesController[0],
             ];
         }
     }
