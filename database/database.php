@@ -21,7 +21,7 @@ class Database extends EnvController {
         return $this->env = $this->getEnvFile();
     }
 
-    private function openConnection ()
+    protected function openConnection ()
     {
         $varDB = $this->getEnvFile();
         $varDBHOST = $varDB["DB_HOSTNAME"];
@@ -59,7 +59,7 @@ class Database extends EnvController {
         $this->closeConnection();
     }
 
-    private function closeConnection ()
+    protected function closeConnection ()
     {
         if($this->mysqli->close()) return 1;
     }
