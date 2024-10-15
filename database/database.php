@@ -17,7 +17,7 @@ class Database extends EnvController {
         return $this->env = $this->getEnvFile();
     }
 
-    private function openConnection ()
+    protected function openConnection ()
     {
         $varDB = $this->getEnvFile();
         $varDBHOST = $varDB["DB_HOSTNAME"];
@@ -50,18 +50,6 @@ class Database extends EnvController {
         {
             return $result = TRUE;
         }
-        // $this->openConnection();
-        // $query = "SELECT $colunas FROM $table $parametros";
-        // $result = $this->mysqli->query($query);
-        // $this->closeConnection();
-        // if ($result->num_rows > 0)
-        // {
-        //     return $result->fetch_all();
-        // }
-        // else
-        // {
-        //     return "Erro ao executar o select";
-        // }
     }
     protected function insert (string $table, string $colunas, string $valores)
     {
@@ -74,7 +62,7 @@ class Database extends EnvController {
         $this->closeConnection();
     }
 
-    private function closeConnection ()
+    protected function closeConnection ()
     {
         if($this->mysqli->close())
         {
