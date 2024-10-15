@@ -20,12 +20,17 @@ $month = new MonthController($datesController);
 <?php require_once "./resources/views/components/headers/header.php"; ?>
 <script>
     const redirect = new Redirect();
+    const task = new TaskAside();
 </script>
 <body class="flex flex-col h-screen bg-slate-950 text-white">
     <main class="h-full">
-        <div class="content h-full m-auto">
+        <div class="content flex w-full h-full m-auto">
             <?php echo $month->genElement(); ?>
+            <?php require_once "./resources/views/components/asides/task-aside.php" ?>
         </div>
     </main>
 </body>
+<script>
+    task.addEvent()
+</script>
 </html>

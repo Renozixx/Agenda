@@ -3,8 +3,9 @@ namespace app\Controllers;
 require_once "./autoloader.php";
 
 class MonthController {
+    private const BASE_URL = 'http://localhost:8000/resources/views/month.php';
     private const DAY_CLASS = "day flex justify-center items-center w-full h-full rounded hover:bg-slate-500 cursor-pointer ease-in-out duration-75";
-    private const MONTH_CLASS = "month grid justify-items-center items-center gap-4 h-full p-3 bg-slate-800 rounded-sm";
+    private const MONTH_CLASS = "month grid justify-items-center items-center gap-4 w-full h-full p-3 bg-slate-800 rounded-sm";
 
     private DatesController $datesController;
 
@@ -22,13 +23,15 @@ class MonthController {
     {
         $currentDate = $this->datesController->getCurrentDate();
         $currentDay = $currentDate["day"];
-        $currentMonth = $this->datesController->months[$currentDate["month"]-1];
+        $currentMonth = $currentDate["month"];
+        $currentYear = $currentDate["year"];
         $element = "";
         for ($i=1; $i<=$qtd; $i++)
         {
             $class = self::DAY_CLASS;
             if ($month == $currentMonth and $i == $currentDay) $class .= " bg-slate-600";
-            $element  .= "<div class='$class'>$i</div>";
+            $url = $this->generateMonthUrl($currentYear, $currentMonth, $i);
+            $element  .= "<div class='$class' onclick='redirect.sendGET(`$url`)'>$i</div>";
         }
         return $element;
     }
@@ -51,6 +54,7 @@ class MonthController {
         $daysMonth = $this->datesController->getDaysInCurrentMonths([$month]);
         $month = $this->datesController->months[$currentDate["month"]-1]; // Pega o mês na forma escrita
         $dayWeek = $this->datesController->getDayFirstWeekMonth([$month]);
+        $month = $currentDate["month"]; // Pega o mês na forma de número
         
         $element = "";
         foreach ($daysMonth as $k => $d)
@@ -78,5 +82,10 @@ class MonthController {
                 "year" => $datesController[0],
             ];
         }
+    }
+
+    private function generateMonthUrl(int $year, int $month, int $day): string
+    {
+        return self::BASE_URL . "/$year/$month/$day";
     }
 }
