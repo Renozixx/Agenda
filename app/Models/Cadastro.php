@@ -27,6 +27,7 @@ class Cadastro extends CadastroController{
             str_replace("'", "", $valores["TELEFONE"]) => "max:11,required",
             str_replace("'", "", $valores["SENHA"]) => "min:6,required",
         ]);
+
         if ($val) return $val;
 
         $result = $this->select($colunas['EMAIL'], "users", " WHERE ".$colunas['EMAIL']." = ".$valores["EMAIL"]);

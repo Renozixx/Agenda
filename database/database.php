@@ -8,6 +8,10 @@ use mysqli;
 use app\Controllers\EnvController;
 use Exception;
 
+// Public -> 
+// Private -> Nao pode assessar, fora, porem todas as funções do nosso arquivo podem acessar ele
+// Protected -> Trabalha em relação a heranças, a classe pai, pode acessar oq está escrito nele, porem o object, ou
+// A classe em sí podem acessar ele
 class Database extends EnvController {
     protected $env;
     protected $mysqli;
@@ -25,18 +29,10 @@ class Database extends EnvController {
         $varDBPASS = $varDB["DB_PASSWORD"];
         $varDBNAME = $varDB["DB_NAME"];
         $this->mysqli = new mysqli($varDBHOST, $varDBUSER, $varDBPASS, $varDBNAME);
-        if ($this->mysqli->connect_errno)
-        {
-            return $this->mysqli->connect_error;
-        }else
-        {
-            return 1;
-        }
+        if ($this->mysqli->connect_errno) return $this->mysqli->connect_error;
+        else return 1;
     }
-    // Public -> 
-    // Private -> Nao pode assessar, fora, porem todas as funções do nosso arquivo podem acessar ele
-    // Protected -> Trabalha em relação a heranças, a classe pai, pode acessar oq está escrito nele, porem o object, ou
-    // A classe em sí podem acessar ele
+
     protected function select (string $colunas, string $table, string $parametros = "")
     {
         try
@@ -51,6 +47,7 @@ class Database extends EnvController {
             return $result = TRUE;
         }
     }
+
     protected function insert (string $table, string $colunas, string $valores)
     {
         $this->openConnection();
@@ -64,9 +61,6 @@ class Database extends EnvController {
 
     protected function closeConnection ()
     {
-        if($this->mysqli->close())
-        {
-            return 1;
-        }
+        if($this->mysqli->close()) return 1;
     }
 }

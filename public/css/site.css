@@ -1,0 +1,26 @@
+:root{
+    --whrc: 30px;
+}
+
+.year{
+    grid-template-columns: repeat(4, 1fr);
+}
+
+
+.month{
+    grid-template-columns: repeat(7, auto);
+    grid-template-rows: auto;
+}
+
+.year > .month{
+    grid-template-columns: repeat(7, var(--whrc));
+    grid-template-rows: repeat(auto-fill, var(--whrc));
+}
+
+.w-300{
+    width: 1200px;
+}
+
+.max-w-300{
+    max-width: 1200px;
+}
