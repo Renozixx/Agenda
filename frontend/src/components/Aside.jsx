@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Aside = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -49,10 +50,10 @@ const Aside = () => {
       {/* Content only visible when expanded */}
       {isExpanded && (
         <div className="mt-4 space-y-4 p-4">
-          <ul className="space-y-2">
-            <li className="p-2 bg-gray-600 rounded hover:bg-gray-500">Option 1</li>
-            <li className="p-2 bg-gray-600 rounded hover:bg-gray-500">Option 2</li>
-            <li className="p-2 bg-gray-600 rounded hover:bg-gray-500">Option 3</li>
+          <ul className="space-y-2">                
+            <li className="p-2 bg-gray-600 rounded hover:bg-gray-500"><Link to={"/"}>Home</Link></li>
+            <li className="p-2 bg-gray-600 rounded hover:bg-gray-500"><Link to={"/login"}>Login</Link></li>
+            <li className="p-2 bg-gray-600 rounded hover:bg-gray-500"><Link to={"/registro"}>Registrar-se</Link></li>
           </ul>
         </div>
       )}

@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 html, body {
-  background-color: #383B40;
+  background-color: #212121;
+}
+
+.form-container {
+  background-color: #2D2D2D;
 }

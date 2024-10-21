@@ -6,7 +6,7 @@ require_once "./autoloader.php";
 
 use app\Controllers\LoginController;
 
-class Login extends LoginController {
+class LoginModel extends LoginController {
 
     public function selectLogin(string $email, string $password)
     {
@@ -16,12 +16,17 @@ class Login extends LoginController {
         $this->closeConnection();
         $senhareal = md5($senhamid);
         
-        $result = $this->validandoLogin($emailmid, $senhareal);
+        $result = $this->validandoLogin($emailmid, $senhamid);
         if($result){
-            echo "foi";
-            return $result;
+            $result1 = array(
+                "id" => $result[0][0], 
+                "username" => $result[0][1],
+                "email" => $result[0][2],
+                "telefone" => $result[0][3]
+            );
+            return $result1;
         } else {
-            echo "Usuário não encontrado";
+            return false;
         }
     }
 

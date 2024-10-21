@@ -9,8 +9,8 @@ const Home = () => {
     })
 
     const getRoute = () => {
-        api.
-        get("Request.php?route=login")
+        api
+        .get("/home")
         .then(res => console.log(res))
         .catch(err => {
             console.log(err)
