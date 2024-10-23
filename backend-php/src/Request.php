@@ -37,6 +37,18 @@ class Request {
             http_response_code(200);
             echo json_encode(array('message' => 'Esta acessando a HomePage'));
         }
+        else if($route == 'login')
+        {
+            $view = new LoginView;
+
+            if(isset($_POST['email']) && isset($_POST['password'])){
+                $result = $view->ReturnLogin($_POST['email'], $_POST['password']);
+                echo json_encode($result);
+            }
+            else {
+                echo json_encode(array('mensagem' => 'Problemas com o metodo post'));
+            }
+        }
     }
 }
 

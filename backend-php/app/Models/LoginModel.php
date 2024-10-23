@@ -18,13 +18,13 @@ class LoginModel extends LoginController {
         
         $result = $this->validandoLogin($emailmid, $senhamid);
         if($result){
-            $result1 = array(
+            $result1 = array('usuario' => [
                 "id" => $result[0][0], 
                 "username" => $result[0][1],
                 "email" => $result[0][2],
                 "telefone" => $result[0][3]
-            );
-            return $result1;
+            ]);
+            return true;
         } else {
             return false;
         }
