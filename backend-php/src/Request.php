@@ -9,6 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
 use resources\views\LoginView;
+use app\Models\Cadastro;
 
 class Request {
     // Fala hugao, consegui concertar o sistma de rotas, e o mais importante as nossas requisições HTTP, amém kkkkkkk
@@ -48,6 +49,10 @@ class Request {
             else {
                 echo json_encode(array('mensagem' => 'Problemas com o metodo post'));
             }
+        }else if($route == "register"){
+            $cadastro = new Cadastro;
+            $cadastro->create("users", ["NOME" => $_POST["nome"], "EMAIL" => $_POST["email"], "TELEFONE" => $_POST["telefone"], "SENHA" => $_POST["password"]]);
+            // print_r($_POST);
         }
     }
 }
