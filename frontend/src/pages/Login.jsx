@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Aside from '../components/Aside'
 import MyHeader from '../components/MyHeader'
-import api from '../api.js'
+import api from '../api/api.js'
 import qs from 'qs'
 function Login() {
   const [email, setEmail] = useState("")

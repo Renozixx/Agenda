@@ -21,7 +21,7 @@ class Request {
     {
         $url = $_SERVER['REQUEST_URI'];
         $url = explode("/", $url);
-        return $url[3];
+        return $url[4];
     }
 
     // Essa função pega a URL, e trata ela como uma rota como conhecemos, não está como o laravel, porem já está
@@ -41,7 +41,6 @@ class Request {
         else if($route == 'login')
         {
             $view = new LoginView;
-
             if(isset($_POST['email']) && isset($_POST['password'])){
                 $result = $view->ReturnLogin($_POST['email'], $_POST['password']);
                 echo json_encode($result);
@@ -52,7 +51,6 @@ class Request {
         }else if($route == "register"){
             $cadastro = new Cadastro;
             $cadastro->create("users", ["NOME" => $_POST["nome"], "EMAIL" => $_POST["email"], "TELEFONE" => $_POST["telefone"], "SENHA" => $_POST["password"]]);
-            // print_r($_POST);
         }
     }
 }

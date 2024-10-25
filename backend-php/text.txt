@@ -1,46 +1,49 @@
-/meu_projeto_laravel
-│
-├── /app
-│   ├── /Console
-│   ├── /Exceptions
-│   ├── /Http
-│   │   ├── /Controllers
-│   │   ├── /Middleware
-│   └── /Models
-│
-├── /bootstrap
-├── /config
-├── /database
-│   ├── /factories
-│   ├── /migrations
-│   └── /seeders
-│
-├── /public
-│   ├── index.php
-│   └── /css
-│
-├── /resources
-│   ├── /lang
-│   ├── /views
-│   └── /css
-│
-├── /routes
-│   ├── web.php
-│   └── api.php
-│
-├── /storage
-│   ├── /app
-│   ├── /framework
-│   └── /logs
-│
-├── /tests
-│   ├── /Feature
-│   └── /Unit
-│
-├── /vendor
-│
-├── artisan
-├── composer.json
-├── .env
-├── .gitignore
-└── README.md
+project-root/
+├── frontend/
+│   ├── public/
+│   │   ├── index.html                  # HTML principal
+│   │   └── vite.svg                    # Ícone SVG
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── index.js                # Configurações da API (Axios)
+│   │   ├── components/
+│   │   │   ├── MyHeader.jsx             # Componente de Cabeçalho
+│   │   │   ├── Aside.jsx                # Componente Aside
+│   │   │   └── ...                      # Outros componentes
+│   │   ├── pages/
+│   │   │   ├── Home.jsx                 # Página Home
+│   │   │   ├── Login.jsx                # Página de Login
+│   │   │   ├── Registro.jsx             # Página de Registro
+│   │   │   └── Teste.jsx                # Página de Teste
+│   │   ├── hooks/                       # Hooks personalizados
+│   │   ├── context/                     # Contexto para gerenciamento de estado
+│   │   ├── styles/
+│   │   │   ├── index.css                # Estilos globais
+│   │   │   └── ...                      # Outros arquivos de estilo
+│   │   ├── utils/                       # Funções utilitárias
+│   │   ├── App.jsx                      # Componente principal da aplicação
+│   │   └── main.jsx                     # Ponto de entrada da aplicação
+│   ├── package.json                      # Dependências do frontend
+│   └── README.md                        # Documentação do frontend
+└── backend-php/
+    ├── app/
+    │   ├── Controllers/
+    │   │   ├── TaskAsideController.php   # Controlador para a lógica do Task Aside
+    │   │   ├── LoginController.php       # Controlador para login
+    │   │   └── CadastroController.php    # Controlador para cadastro
+    │   ├── Models/
+    │   │   └── UserModel.php             # Modelo de usuário
+    │   ├── Middleware/                   # Middleware para autenticação e validação
+    │   └── Routes/                       # Definições de rotas da API
+    │       └── api.php                   # Arquivo de rotas da API
+    ├── database/
+    │   └── database.php                  # Conexão com o banco de dados
+    ├── public/
+    │   ├── css/
+    │   │   ├── index.css                 # Estilos globais
+    │   ├── js/
+    │   │   └── index.js                  # Scripts JavaScript
+    ├── .gitignore                        # Arquivo para ignorar arquivos no Git
+    ├── composer.json                     # Dependências do backend
+    ├── README.md                         # Documentação do backend
+    └── index.php                         # Ponto de entrada do backend
