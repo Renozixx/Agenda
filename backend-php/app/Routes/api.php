@@ -10,6 +10,7 @@ header("Access-Control-Allow-Credentials: true");
 
 use resources\views\LoginView;
 use app\Models\Cadastro;
+use app\Models\Tasks;
 
 class Request {
     // Fala hugao, consegui concertar o sistma de rotas, e o mais importante as nossas requisições HTTP, amém kkkkkkk
@@ -29,28 +30,33 @@ class Request {
     public function Route ()
     {
         $route = $this->getURL();
-
         $metodo = $_SERVER['REQUEST_METHOD'];
 
         // Vamos fazer um IF gigante para decidir entra cada rota, pode ser meio burro mas é oque temos.
-        if($route == 'home')
-        {
-            http_response_code(200);
-            echo json_encode(array('message' => 'Esta acessando a HomePage'));
-        }
-        else if($route == 'login')
-        {
-            $view = new LoginView;
-            if(isset($_POST['email']) && isset($_POST['password'])){
-                $result = $view->ReturnLogin($_POST['email'], $_POST['password']);
-                echo json_encode($result);
-            }
-            else {
-                echo json_encode(array('mensagem' => 'Problemas com o metodo post'));
-            }
-        }else if($route == "register"){
-            $cadastro = new Cadastro;
-            $cadastro->create("users", ["NOME" => $_POST["nome"], "EMAIL" => $_POST["email"], "TELEFONE" => $_POST["telefone"], "SENHA" => $_POST["password"]]);
+        switch($route) {
+            case 'home':
+                http_response_code(200);
+                echo json_encode(array('message' => 'Esta acessando a HomePage'));
+                break;
+            case 'login':
+                $view = new LoginView;
+                if(isset($_POST['email']) && isset($_POST['password'])){
+                    $result = $view->ReturnLogin($_POST['email'], $_POST['password']);
+                    echo json_encode($result);
+                }
+                else {
+                    echo json_encode(array('mensagem' => 'Problemas com o metodo post'));
+                }
+                break;
+            case "register":
+                $cadastro = new Cadastro;
+                $cadastro->create("users", ["NOME" => $_POST["nome"], "EMAIL" => $_POST["email"], "TELEFONE" => $_POST["telefone"], "SENHA" => $_POST["password"]]);
+                break;
+            case "requestTasks":
+                $tasks = new Tasks();
+                http_response_code(200);
+                echo json_encode($tasks->getTasks());
+                break;
         }
     }
 }
