@@ -3,10 +3,14 @@ import Aside from '../components/Aside'
 import MyHeader from '../components/MyHeader'
 import api from '../api.js'
 import qs from 'qs'
+import { useNavigate } from 'react-router-dom'
+
 function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [message, setMessage] = useState("")
   const [user, setUser] = useState(false)
+  const navigate = useNavigate()
   
   const formSubmit = (e) => {
     e.preventDefault()
@@ -19,8 +23,14 @@ function Login() {
       })
     )
     .then(res => {
-      setUser(res.data)
-      console.log(user)
+      if(res.data == true)
+      {
+        navigate("/")
+      }
+      else
+      {
+        setMessage("Usuario nao encontrado")
+      }
     })
     .catch(err => console.log(err))
   }
@@ -35,6 +45,7 @@ function Login() {
             <form onSubmit={formSubmit} className='form-container p-8 rounded-lg shadow-sm shadow-black w-full text-white 
             text-xl'>
               <h1 className='text-2xl mb-4 text-center'>Login</h1>
+              <p className='text-center text-red-600'>{message}</p>
               <div className=''>
                 <label htmlFor="Email" className='block font-semibold'>Email</label>
                 <br />

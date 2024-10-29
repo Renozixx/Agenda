@@ -5,7 +5,7 @@ import axios from "axios";
 const api = axios.create({
     baseURL: 'http://localhost:8000/src/Request.php', // Essa é a URL base visando atingir as "Rotas"
     withCredentials: true, // Isso serve para os cookies
-    headers: {        
+    headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
 })

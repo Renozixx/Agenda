@@ -1,26 +1,41 @@
-import React, { useEffect, useState } from 'react'
-import api from '../api'
-import MyHeader from '../components/MyHeader'
+import React, { useEffect, useState } from "react";
+import api from "../api";
+import MyHeader from "../components/MyHeader";
 
 const Teste = () => {
-    const [req, setReq] = useState("")
+  const [counter, setCounter] = useState(0);
 
-    useEffect(() => {
-      testandoAPI()
-    })
-
-    const testandoAPI = () => {
-      api
+  const testandoAPI = () => {
+    api
       .get("/teste")
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
-    }
-  
-    return (
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  const mudandoCounter = () => {
+    setCounter((counter+1))
+  }
+
+  const Teste = () => {
+    console.log("Mostrando o uso do UseEffect")
+  }
+
+  useEffect(() => {
+    testandoAPI();
+  }, []);
+
+  useEffect(() =>{
+    Teste()
+  }, [counter])
+
+  return (
     <>
-
+      <main className="text-white p-10">
+        <p className="text-xl">{counter}</p>
+        <button onClick={mudandoCounter} className="bg-gray-700 p-2 border-black">Adicionando valor no Counter</button>
+      </main>
     </>
-  )
-}
+  );
+};
 
-export default Teste
+export default Teste;
