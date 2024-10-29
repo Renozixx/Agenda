@@ -11,4 +11,9 @@ class Tasks extends TasksController {
     {
         return $this->returnTasks();
     }
+
+    public function create ($valores)
+    {
+        $this->insertTask($valores);
+    }
 }

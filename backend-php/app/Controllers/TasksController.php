@@ -13,4 +13,9 @@ class TasksController extends Database{
     {
         return $this->select("*", "personal_activities");
     }
+
+    protected function insertTask ($valores)
+    {
+        $this->insert("personal_activities", "title, description, date, time, users_id_users", $valores);
+    }
 }

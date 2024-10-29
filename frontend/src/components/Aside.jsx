@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const Aside = () => {
+const Aside = ({ onToggle }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [timer, setTimer] = useState(null);
 
@@ -9,6 +9,7 @@ const Aside = () => {
   const toggleAside = () => {
     setIsExpanded((prevState) => !prevState);
     resetTimer(); // Reset the timer when user interacts
+    onToggle(isExpanded); // Chamando onToggle com o estado atual
   };
 
   // Auto-shrink the aside after 30 seconds

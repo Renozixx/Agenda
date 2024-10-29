@@ -57,6 +57,16 @@ class Request {
                 http_response_code(200);
                 echo json_encode($tasks->getTasks());
                 break;
+            case "createTask":
+                $tasks = new Tasks();
+                $title = $_POST["title"];
+                $desc = $_POST["desc"];
+                $date = $_POST["date"];
+                $time = $_POST["time"];
+                $tasks->create(chr(39)."$title".chr(39).", ".chr(39)."$desc".chr(39).", ".chr(39)."$date".chr(39).", ".chr(39)."$time".chr(39).", 1");
+                http_response_code(200);
+                echo json_encode([$_POST]);
+                break;
         }
     }
 }
