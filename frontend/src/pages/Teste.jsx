@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import api from "../api";
-import MyHeader from "../components/MyHeader";
+import React, { useEffect, useState } from 'react'
+import api from '../api/api'
+import MyHeader from '../components/MyHeader'
 
 const Teste = () => {
   const [counter, setCounter] = useState(0);

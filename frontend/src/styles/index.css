@@ -9,3 +9,11 @@ html, body {
 .form-container {
   background-color: #2d2d2d99;
 }
+
+.w-50p {
+  width: 50%;
+}
+
+.translate-xy-1\/2n {
+  transform: translate(-50%, -50%);
+}
