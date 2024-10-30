@@ -1,10 +1,8 @@
 <?php
 
-namespace app\Models;
+namespace App\Models;
 
-require_once "./autoloader.php";
-
-use app\Controllers\TasksController;
+use App\Controllers\TasksController;
 
 class Tasks extends TasksController {
     public function getTasks ()

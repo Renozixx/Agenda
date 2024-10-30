@@ -1,6 +1,5 @@
 <?php
-namespace app\Controllers;
-require_once "./autoloader.php";
+namespace App\Controllers;
 
 class MonthController {
     private const BASE_URL = 'http://localhost:8000/resources/views/month.php';

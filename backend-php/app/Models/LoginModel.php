@@ -4,7 +4,7 @@ namespace app\Models;
 
 require_once "./autoloader.php";
 
-use app\Controllers\LoginController;
+use App\Controllers\LoginController;
 
 class LoginModel extends LoginController {
 

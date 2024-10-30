@@ -1,10 +1,8 @@
 <?php
 
-namespace app\Controllers;
+namespace App\Controllers;
 
-require_once "./autoloader.php";
-
-use database\Database;
+use Database\Database;
 class CadastroController extends Database {
     protected function createUser (string $table, $colunas, $valores)
     {

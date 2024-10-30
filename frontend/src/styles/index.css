@@ -17,3 +17,8 @@ html, body {
 .translate-xy-1\/2n {
   transform: translate(-50%, -50%);
 }
+
+.scroll-bg-dark{
+  scrollbar-color: #334155 #0f172a;
+  scrollbar-width: thin;
+}

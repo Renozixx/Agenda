@@ -1,7 +1,5 @@
 <?php
-namespace app\Controllers;
-
-require_once "./autoloader.php";
+namespace App\Controllers;
 
 // Esse validador serve para validar campos, se o cara colocar por exemplo, uma sena 12345, o que está fora dos nossos
 // parametros de segurança, 

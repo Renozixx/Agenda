@@ -2,10 +2,8 @@
 
 namespace database;
 
-require_once "./autoloader.php";
-
 use mysqli;
-use app\Controllers\EnvController;
+use App\Controllers\EnvController;
 use Exception;
 
 // Public -> 

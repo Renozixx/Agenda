@@ -1,16 +1,16 @@
 <?php
 
-namespace src;
-require "./autoloader.php";
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: http://localhost:5173");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
-use resources\views\LoginView;
-use app\Models\Cadastro;
-use app\Models\Tasks;
+use Resources\views\LoginView;
+use App\Models\Cadastro;
+use App\Models\Tasks;
 
 class Request {
     // Fala hugao, consegui concertar o sistma de rotas, e o mais importante as nossas requisições HTTP, amém kkkkkkk

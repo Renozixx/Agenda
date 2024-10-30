@@ -29,7 +29,7 @@ const Home = () => {
     <>
       <MyHeader/>
       <main className={`min-h-screen ${isExpanded ? "ml-16" : "ml-64"} pt-16 p-4 transition-all duration-200`}>
-        <div className="boxTasks flex gap-3  w-fill">
+        <div className="boxTasks flex gap-3 w-fill overflow-auto scroll-bg-dark scroll-btn-none">
           {tasks.map((task, index) => (
             <CardTask key={index} props={task} />
           ))}
