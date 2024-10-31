@@ -1,6 +1,5 @@
 <?php
-namespace app\Controllers;
-require_once "./autoloader.php";
+namespace App\Controllers;
 
 class HomePageController
 {

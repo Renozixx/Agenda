@@ -1,7 +1,7 @@
 <?php
 
-namespace app\Routes;
-require "./autoloader.php";
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: http://localhost:5173");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
