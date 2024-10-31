@@ -22,15 +22,15 @@ class Cadastro extends CadastroController{
 
         $val = new ValidadorController();
         $val = $val->validate([ // Método para fazer a validação de campos (qualquer).
-            str_replace("'", "", $valores["NOME"]) => "required",
-            str_replace("'", "", $valores["EMAIL"]) => "mail,required",
-            str_replace("'", "", $valores["TELEFONE"]) => "max:11,required",
-            str_replace("'", "", $valores["SENHA"]) => "min:6,required",
+            str_replace("'", "", $valores["username"]) => "required",
+            str_replace("'", "", $valores["email"]) => "mail,required",
+            str_replace("'", "", $valores["phone"]) => "max:11,required",
+            str_replace("'", "", $valores["password"]) => "min:6,required",
         ]);
 
         if ($val) return $val;
 
-        $result = $this->select($colunas['EMAIL'], "users", " WHERE ".$colunas['EMAIL']." = ".$valores["EMAIL"]);
+        $result = $this->select($colunas['email'], "users", " WHERE ".$colunas['email']." = ".$valores["email"]);
         if ($result)
         {
             return FALSE;

@@ -24,9 +24,11 @@ class LoginModel extends LoginController {
                 "email" => $result[0][2],
                 "telefone" => $result[0][3]
             ]);
-            return true;
+            http_response_code(200);
+            echo json_encode(true);
         } else {
-            return false;
+            http_response_code(205);
+            echo json_encode(false);
         }
     }
 

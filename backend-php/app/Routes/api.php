@@ -1,6 +1,6 @@
 <?php
 
-namespace src;
+namespace app\Routes;
 require "./autoloader.php";
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: http://localhost:5173");
@@ -8,7 +8,7 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
-use resources\views\LoginView;
+use app\Models\LoginModel;
 use app\Models\Cadastro;
 use app\Models\Tasks;
 
@@ -39,10 +39,9 @@ class Request {
                 echo json_encode(array('message' => 'Esta acessando a HomePage'));
                 break;
             case 'login':
-                $view = new LoginView;
+                $model = new LoginModel;
                 if(isset($_POST['email']) && isset($_POST['password'])){
-                    $result = $view->ReturnLogin($_POST['email'], $_POST['password']);
-                    echo json_encode($result);
+                    $model->selectLogin($_POST['email'], $_POST['password']);
                 }
                 else {
                     echo json_encode(array('mensagem' => 'Problemas com o metodo post'));
@@ -50,7 +49,7 @@ class Request {
                 break;
             case "register":
                 $cadastro = new Cadastro;
-                $cadastro->create("users", ["NOME" => $_POST["nome"], "EMAIL" => $_POST["email"], "TELEFONE" => $_POST["telefone"], "SENHA" => $_POST["password"]]);
+                $cadastro->create("users", ["username" => $_POST["nome"], "email" => $_POST["email"], "password" => $_POST["password"], "phone" => $_POST["telefone"]]);
                 break;
             case "requestTasks":
                 $tasks = new Tasks();

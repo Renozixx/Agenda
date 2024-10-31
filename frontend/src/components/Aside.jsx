@@ -43,9 +43,9 @@ const Aside = ({ onToggle }) => {
       {/* Toggle Button */}
       <button
         onClick={toggleAside}
-        className="w-full p-4 bg-gray-700 hover:bg-gray-600 focus:outline-none"
+        className=" p-4 bg-gray-700 hover:bg-gray-600 focus:outline-none"
       >
-        {isExpanded ? 'Close' : 'Open'}
+        {isExpanded ? 'x' : '>'}
       </button>
 
       {/* Content only visible when expanded */}
