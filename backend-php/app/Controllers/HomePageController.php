@@ -4,8 +4,8 @@ namespace App\Controllers;
 class HomePageController
 {
     private const BASE_URL = 'http://localhost:8000/resources/views/month.php';
-    private const DAY_CLASS = 'day flex justify-center items-center w-full text-white rounded-full cursor-pointer transition aspect-square';
-    private const MONTH_CLASS = 'month grid-month justify-items-center items-center gap-1 w-full p-3 bg-slate-800 aspect-square rounded';
+    private const DAY_CLASS = 'day flex justify-center items-center w-full rounded-full hover:bg-slate-500 cursor-pointer ease-in-out duration-75 aspect-square';
+    private const MONTH_CLASS = 'month grid justify-items-center items-center gap-1 w-max p-3 bg-slate-800 rounded-sm';
 
     private DatesController $datesController;
 
@@ -31,7 +31,7 @@ class HomePageController
             $class = self::DAY_CLASS;
             if ($month == $currentMonth && $i == $currentDay) $class .= " bg-slate-600";
             $url = $this->generateMonthUrl($currentYear, $month, $i);
-            $element .= "<div class='$class' onClick={visibleMonth}>{$i}</div>";
+            $element .= "<div class='$class' onclick='redirect.sendGET(`$url`)'>{$i}</div>";
         }
         return $element;
     }

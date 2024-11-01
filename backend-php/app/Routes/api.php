@@ -8,12 +8,9 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
-use App\Models\LoginModel;
-use App\Models\Cadastro;
-use App\Models\Tasks;
-use App\Controllers\DatesController;
-use App\Controllers\HomePageController;
-use App\Controllers\MonthController;
+use app\Models\LoginModel;
+use app\Models\Cadastro;
+use app\Models\Tasks;
 
 class Request {
     // Fala hugao, consegui concertar o sistma de rotas, e o mais importante as nossas requisições HTTP, amém kkkkkkk
@@ -54,21 +51,10 @@ class Request {
                 $cadastro = new Cadastro;
                 $cadastro->create("users", ["username" => $_POST["nome"], "email" => $_POST["email"], "password" => $_POST["password"], "phone" => $_POST["telefone"]]);
                 break;
-            case "requestPersonal":
-                $tasks = new Tasks();
-                $datesController = new DatesController();
-                $home = new HomePageController($datesController);
-                $month = new MonthController($datesController);
-                http_response_code(200);
-                echo json_encode([$tasks->getTasks(), $home->genElements(), $month->genElement()]);
-                break;
             case "requestTasks":
                 $tasks = new Tasks();
                 http_response_code(200);
                 echo json_encode($tasks->getTasks());
-                break;
-            case "requestMonths":
-                http_response_code(200);
                 break;
             case "createTask":
                 $tasks = new Tasks();

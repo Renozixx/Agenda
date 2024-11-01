@@ -1,7 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import PersonalTasks from './pages/PersonalTasks'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Registro from './pages/Registro'
@@ -12,7 +11,6 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/personaltasks' element={<PersonalTasks />} />
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Registro />}></Route>
         <Route path='/teste' element={<Teste />}></Route>
