@@ -2,10 +2,8 @@
 
 namespace app\Models;
 
-require_once "./autoloader.php";
-
-use app\Controllers\CadastroController;
-use app\Controllers\ValidadorController;
+use App\Controllers\CadastroController;
+use App\Controllers\ValidadorController;
 use Exception;
 
 class Cadastro extends CadastroController{

@@ -7,6 +7,7 @@ const MyHeader = () => {
         <header className="flex justify-center w-full p-3 fixed">
             <ul className="flex gap-2 text-white">
                 <li><Link to={"/"}>Home</Link></li>
+                <li><Link to={"/personaltasks"}>Personal Tasks</Link></li>
                 <li><Link to={"/login"}>Login</Link></li>
                 <li><Link to={"/register"}>Registrar-se</Link></li>
             </ul>

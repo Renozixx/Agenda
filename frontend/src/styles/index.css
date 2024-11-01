@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+  --whrc: 30px;
+}
+
 html, body {
   background-color: #212121;
 }
@@ -14,11 +18,55 @@ html, body {
   width: 50%;
 }
 
+.bg-slate-600 {
+  background-color: #475569;
+}
+
 .translate-xy-1\/2n {
   transform: translate(-50%, -50%);
+}
+
+.translate-xy-1n\/2 {
+  transform: translate(50%, -50%);
 }
 
 .scroll-bg-dark{
   scrollbar-color: #334155 #0f172a;
   scrollbar-width: thin;
+}
+
+.grid-year {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-year > .grid-month {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+}
+
+.grid-month {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  grid-template-rows: auto;
+}
+
+.aspect-square {
+  aspect-ratio: 1/1;
+}
+
+.transition {
+  transition: all .1 ease-in-out;
+}
+
+.transition:hover {
+  background-color: #64748b;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.top-0 {
+  top: 0%;
 }
