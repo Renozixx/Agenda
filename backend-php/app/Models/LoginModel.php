@@ -1,10 +1,9 @@
 <?php
 
-namespace app\Models;
-
-require_once "./autoloader.php";
+namespace App\Models;
 
 use App\Controllers\LoginController;
+use App\Middlewares\middleware;
 
 class LoginModel extends LoginController {
 
@@ -18,14 +17,10 @@ class LoginModel extends LoginController {
         
         $result = $this->validandoLogin($emailmid, $senhamid);
         if($result){
-            $result1 = array('usuario' => [
-                "id" => $result[0][0], 
-                "username" => $result[0][1],
-                "email" => $result[0][2],
-                "telefone" => $result[0][3]
-            ]);
+            session_start();
+            $_SESSION['id'] = $result[0][0];
             http_response_code(200);
-            echo json_encode(true);
+            echo json_encode(array(true, 'id' => $result[0][0]));
         } else {
             http_response_code(205);
             echo json_encode(false);

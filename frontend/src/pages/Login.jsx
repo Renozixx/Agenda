@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Aside from '../components/Aside'
 import MyHeader from '../components/MyHeader'
+import { ID } from '../api/constants.js'
 import api from '../api/api.js'
 import qs from 'qs'
 import { useNavigate } from 'react-router-dom'
@@ -23,8 +24,9 @@ function Login() {
       })
     )
     .then(res => {
-      if(res.data == true)
+      if(res.data[0] == true)
       {
+        localStorage.setItem(ID, res.data.id)
         navigate("/")
       }
       else

@@ -8,9 +8,10 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
-use app\Models\LoginModel;
-use app\Models\Cadastro;
-use app\Models\Tasks;
+use App\Models\LoginModel;
+use App\Models\Cadastro;
+use App\Models\Tasks;
+use App\Middlewares\middleware;
 
 class Request {
     // Fala hugao, consegui concertar o sistma de rotas, e o mais importante as nossas requisições HTTP, amém kkkkkkk
@@ -34,9 +35,13 @@ class Request {
 
         // Vamos fazer um IF gigante para decidir entra cada rota, pode ser meio burro mas é oque temos.
         switch($route) {
-            case 'home':
-                http_response_code(200);
-                echo json_encode(array('message' => 'Esta acessando a HomePage'));
+            case 'verify':
+                $middle = new middleware;
+                if(isset($_POST['id'])){
+                    $middle->VerifySession($_POST['id']);
+                } else {
+                    echo json_encode(['mesagem' => 'Erro com o metodo post']);
+                }
                 break;
             case 'login':
                 $model = new LoginModel;
