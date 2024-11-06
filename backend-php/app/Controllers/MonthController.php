@@ -1,10 +1,11 @@
 <?php
 namespace App\Controllers;
 
-class MonthController {
+use App\Controllers\DatesController;
+class MonthController extends DatesController {
     private const BASE_URL = 'http://localhost:8000/resources/views/month.php';
-    private const DAY_CLASS = "day flex justify-center items-center w-full h-full rounded hover:bg-slate-500 cursor-pointer ease-in-out duration-75";
-    private const MONTH_CLASS = "month grid justify-items-center items-center gap-4 w-full h-full p-3 bg-slate-800 rounded-sm";
+    private const DAY_CLASS = "day flex justify-center items-center w-full h-full rounded transition cursor-pointer";
+    private const MONTH_CLASS = "month grid-month justify-items-center items-center gap-4 w-full h-full p-3 bg-slate-800";
 
     private DatesController $datesController;
 
@@ -30,7 +31,7 @@ class MonthController {
             $class = self::DAY_CLASS;
             if ($month == $currentMonth and $i == $currentDay) $class .= " bg-slate-600";
             $url = $this->generateMonthUrl($currentYear, $currentMonth, $i);
-            $element  .= "<div class='$class' onclick='redirect.sendGET(`$url`)'>$i</div>";
+            $element  .= "<div class='$class'>$i</div>";
         }
         return $element;
     }
@@ -42,13 +43,13 @@ class MonthController {
         }, $this->datesController->daysWeek);
 
         $elements = "";
-        foreach ($daysWeek as $d) $elements .= "<div>".$d."</div>";
+        foreach ($daysWeek as $d) $elements .= "<div class='flex justify-center'>".$d."</div>";
         return $elements;
     }
 
     private function genMonth ()
     {
-        $currentDate = $this->getDateUrl();
+        $currentDate = $this->getCurrentDate();
         $month = $currentDate["month"]; // Pega o mês na forma de número
         $daysMonth = $this->datesController->getDaysInCurrentMonths([$month]);
         $month = $this->datesController->months[$currentDate["month"]-1]; // Pega o mês na forma escrita
