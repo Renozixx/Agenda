@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Session;
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 header('Content-Type: application/json');
@@ -15,6 +17,7 @@ use App\Middlewares\middleware;
 use App\Controllers\DatesController;
 use App\Controllers\HomePageController;
 use App\Controllers\MonthController;
+use App\Models\SessionModel;
 
 class Request {
     // Fala hugao, consegui concertar o sistma de rotas, e o mais importante as nossas requisições HTTP, amém kkkkkkk
@@ -38,6 +41,9 @@ class Request {
 
         // Vamos fazer um IF gigante para decidir entra cada rota, pode ser meio burro mas é oque temos.
         switch($route) {
+            // Caso que faz a verificação da sessão do usuario, com base em dois IDs, um enviado pelo front, e um armazenado no
+            // Back, o que gera uma confiança maior em relação a segurança; Pretendo mudar para um codigo de segurança aleatorio
+            // Gerado no processo de login, o que simularia um JWToken, porem nao seria ele exatamente
             case 'verify':
                 $middle = new middleware;
                 if(isset($_POST['id'])){
@@ -46,6 +52,9 @@ class Request {
                     echo json_encode(['mesagem' => 'Erro com o metodo post']);
                 }
                 break;
+            case 'logout':
+                $model = new SessionModel;
+                $model->logOut();
             case 'login':
                 $model = new LoginModel;
                 if(isset($_POST['email']) && isset($_POST['password'])){
