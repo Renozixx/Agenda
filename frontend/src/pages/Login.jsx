@@ -4,7 +4,7 @@ import MyHeader from '../components/MyHeader'
 import { ID } from '../api/constants.js'
 import api from '../api/api.js'
 import qs from 'qs'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Login() {
   const [email, setEmail] = useState("")
@@ -40,8 +40,6 @@ function Login() {
   return (
     <>
       <main className='flex'>
-        {user}
-        <MyHeader></MyHeader>
         <div className='mt-20 flex justify-center items-center w-full'>
           <div className='lg:w-1/3 md:w-2/3 sm:w-4/5 h-full'>
             <form onSubmit={formSubmit} className='form-container p-8 rounded-lg shadow-sm shadow-black w-full text-white 
@@ -77,6 +75,11 @@ function Login() {
                   Logar
                 </button>
               </div>
+              <br />
+              <span>
+                Não possuí login? <br/>
+                Clique <Link to={"/register"}>AQUI</Link> para logar
+              </span>
             </form>
           </div>
         </div>

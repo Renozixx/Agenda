@@ -9,16 +9,17 @@ use App\Controllers\SessionController;
  * conforme necessário
  */
 class middleware extends SessionController {
-    protected function OpenSession() : void {
-        if(!isset($_SESSION)) {
-            session_start();
-        }    
-    }
 
+    // @method void VerifySession($id)
+    // Esta função recebe um ID
     public function VerifySession($id): void {
         $this->OpenSession();
-        if($_SESSION['id'] == $id){
-            echo json_encode(true);
+        if(isset($_SESSION['id'])){
+            if($_SESSION['id'] == $id){
+                echo json_encode(true);
+            } else {
+                echo json_encode(false);
+            }
         } else {
             echo json_encode(false);
         }

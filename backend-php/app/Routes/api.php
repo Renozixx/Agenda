@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Session;
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 header('Content-Type: application/json');
@@ -16,6 +18,7 @@ use App\Controllers\DatesController;
 use App\Controllers\EnvController;
 use App\Controllers\HomePageController;
 use App\Controllers\MonthController;
+use App\Models\SessionModel;
 
 /**
  * Classe para receber e tratar a requisições dos nossos micro serviços.
@@ -48,6 +51,9 @@ class Api {
         $metodo = $_SERVER['REQUEST_METHOD'];
 
         switch($route) {
+            // Caso que faz a verificação da sessão do usuario, com base em dois IDs, um enviado pelo front, e um armazenado no
+            // Back, o que gera uma confiança maior em relação a segurança; Pretendo mudar para um codigo de segurança aleatorio
+            // Gerado no processo de login, o que simularia um JWToken, porem nao seria ele exatamente
             case 'verify':
                 $middle = new middleware;
                 if(isset($_POST['id'])){
@@ -56,6 +62,9 @@ class Api {
                     echo json_encode(['mesagem' => 'Erro com o metodo post']);
                 }
                 break;
+            case 'logout':
+                $model = new SessionModel;
+                $model->logOut();
             case 'login':
                 $model = new LoginModel;
                 if(isset($_POST['email']) && isset($_POST['password'])){
