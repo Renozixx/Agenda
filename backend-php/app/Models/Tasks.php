@@ -4,6 +4,9 @@ namespace App\Models;
 
 use App\Controllers\TasksController;
 
+/**
+ * Lida com as tarefas do usuário
+ */
 class Tasks extends TasksController {
     public function getTasks ()
     {

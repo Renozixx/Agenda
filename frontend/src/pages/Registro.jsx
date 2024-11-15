@@ -26,7 +26,7 @@ function Registro() {
     )
     .then(res => {
       setUser(res.data)
-      console.log(user)
+      console.log(res.data)
     })
     .catch(err => console.log(err))
   }
@@ -38,7 +38,7 @@ function Registro() {
         <MyHeader></MyHeader>
         <div className='mt-20 flex justify-center items-center w-full'>
           <div className='lg:w-1/3 md:w-2/3 sm:w-4/5 h-full'>
-            <FormRegistro envio={formSubmit}></FormRegistro>
+            <FormRegistro envio={formSubmit} setnome={setNome} setemail={setEmail} setpassword={setPassword} settelefone={setTelefone}></FormRegistro>
           </div>
         </div>
       </main>

@@ -4,61 +4,108 @@ namespace database;
 
 use mysqli;
 use App\Controllers\EnvController;
+use Database\DatabaseInterface;
 use Exception;
+use PDO;
+use PDOException;
 
-// Public -> 
-// Private -> Nao pode assessar, fora, porem todas as funções do nosso arquivo podem acessar ele
-// Protected -> Trabalha em relação a heranças, a classe pai, pode acessar oq está escrito nele, porem o object, ou
-// A classe em sí podem acessar ele
-class Database extends EnvController {
-    protected $env;
-    protected $mysqli;
 
-    public function getEnv ()
+/**
+ * Classe que lida com a base de dados
+ * inserindo, recuperando valores
+ * @extends App\Controllers\EnvController
+ */
+class Database extends EnvController implements DatabaseInterface{
+    private array $env;
+    public static $instance;
+    public ?PDO $connection = null;
+
+    public function __construct ()
     {
         return $this->env = $this->getEnvFile();
     }
 
-    protected function openConnection ()
+    private function getInstance ()
     {
-        $varDB = $this->getEnvFile();
-        $varDBHOST = $varDB["DB_HOSTNAME"];
-        $varDBUSER = $varDB["DB_USERNAME"];
-        $varDBPASS = $varDB["DB_PASSWORD"];
-        $varDBNAME = $varDB["DB_NAME"];
-        $this->mysqli = new mysqli($varDBHOST, $varDBUSER, $varDBPASS, $varDBNAME);
-        if ($this->mysqli->connect_errno) return $this->mysqli->connect_error;
-        else return 1;
+        if (self::$instance === null)
+        {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
-    protected function select (string $colunas, string $table, string $parametros = "")
+    private function connect (): void
     {
-        try
+        if ($this->connection === null)
         {
-            $this->openConnection();
-            $query = "SELECT $colunas FROM $table $parametros";
-            $result = $this->mysqli->query($query);
-            $this->closeConnection();
-            return $result->fetch_all();
-        }catch (Exception $e)
-        {
-            return $result = TRUE;
+            try
+            {
+                $dsn = sprintf(
+                    "mysql:host=%s;dbname=%s;charset=utf8mb4",
+                    $this->env["DB_HOSTNAME"],
+                    $this->env["DB_NAME"]
+                );
+
+                $this->connection = new PDO(
+                    $dsn,
+                    $this->env["DB_USERNAME"],
+                    $this->env["DB_PASSWORD"],
+                    [
+                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                    ]
+                );
+            }catch (PDOException $e)
+            {
+                throw new PDOException("Erro na conexão: ".$e->getMessage());
+            }
         }
     }
 
-    protected function insert (string $table, string $colunas, string $valores)
+    public function select (string $colunas, string $table, string $parametros = ""): array
     {
-        $this->openConnection();
-
-        $query = "INSERT INTO $table (".$colunas.") VALUES (".$valores.")";
-        var_dump($query);
-        $this->mysqli->query($query);
-
-        $this->closeConnection();
+        try
+        {
+            $this->connect();
+            $query = "SELECT $colunas FROM $table $parametros";
+            $stmt = $this->connection->prepare($query);
+            $stmt->execute();
+            
+            return $stmt->fetchAll();
+        }catch (PDOException $e)
+        {
+            throw new PDOException("Erro na consulta: ".$e->getMessage());
+        }
     }
 
-    protected function closeConnection ()
+    public function insert (string $table, string $colunas, array $valores): bool
     {
-        if($this->mysqli->close()) return 1;
+        try
+        {
+            $this->connect();
+            $placeholders = str_repeat("?,", count($valores) - 1)."?";
+            $query = "INSERT INTO $table (".$colunas.") VALUES (".$placeholders.")";
+
+            $stmt = $this->connection->prepare($query);
+            return $stmt->execute(array_values($valores));
+        }catch (PDOException $e)
+        {
+            throw new PDOException("Erro na inserção: ".$e->getMessage());
+        }
+    }
+
+    public function closeConnection (): bool
+    {
+        if ($this->connection !== null)
+        {
+            $this->connection = null;
+            return true;
+        }
+        return false;
+    }
+
+    public function __destruct()
+    {
+        $this->closeConnection();
     }
 }

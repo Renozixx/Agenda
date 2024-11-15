@@ -13,30 +13,40 @@ use App\Models\Cadastro;
 use App\Models\Tasks;
 use App\Middlewares\middleware;
 use App\Controllers\DatesController;
+use App\Controllers\EnvController;
 use App\Controllers\HomePageController;
 use App\Controllers\MonthController;
 
-class Request {
-    // Fala hugao, consegui concertar o sistma de rotas, e o mais importante as nossas requisições HTTP, amém kkkkkkk
-    // Bem eu queria só dizer que agora o Axios funciona, o React Funciona e aqui nesse arquivo, que você vai 
-    // Fazer com que o nosso PHP interaja com o Front-End.
+/**
+ * Classe para receber e tratar a requisições dos nossos micro serviços.
+ */
+class Api {
 
-    // Essa função pega a requisição que estamos fazendo do front-end e separa só o que a gente quer
-    private function getURL ()
+    /**
+     * Recupera a requisição feita pela nossa API
+     * e separa um parâmetro especifico
+     * @var array $url
+     * @return string
+     */
+    private function getURL (): string
     {
         $url = $_SERVER['REQUEST_URI'];
         $url = explode("/", $url);
+
         return $url[4];
     }
 
-    // Essa função pega a URL, e trata ela como uma rota como conhecemos, não está como o laravel, porem já está
-    // Mais parecido com algo mais organizado, depois que a gente evoluir vale dar uma melhorada nisso.
-    public function Route ()
+    /**
+     * Trata o parâmetro separado da URL,
+     * retornado de 'getURL()'
+     * @var string $route
+     * @return void
+     */
+    public function Route (): void
     {
         $route = $this->getURL();
         $metodo = $_SERVER['REQUEST_METHOD'];
 
-        // Vamos fazer um IF gigante para decidir entra cada rota, pode ser meio burro mas é oque temos.
         switch($route) {
             case 'verify':
                 $middle = new middleware;
@@ -89,5 +99,5 @@ class Request {
     }
 }
 
-$req = new Request();
+$req = new Api();
 $req->Route();

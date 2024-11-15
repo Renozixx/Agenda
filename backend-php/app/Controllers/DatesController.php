@@ -28,7 +28,7 @@ class DatesController {
         "December",
     ];
 
-    public function getCurrentDate ()
+    public function getCurrentDate (): array
     {
         return [
             "day"=>date("j"), // Retorna de 1 a 31
@@ -37,25 +37,25 @@ class DatesController {
         ];
     }
 
-    public function getCurrentMonths () // Retorna um array de inteiros correspondente ao mês. Ex: 1 => Janeiro, 2 => Fevereiro, etc.
+    public function getCurrentMonths (): array
     {
-        $months = [];
-        foreach ($this->months as $v) $months[] = intval(date("m", strtotime("$v ".$this->getCurrentDate()["year"])));
-        return $months;
+        return array_map(function($month) {
+            return intval(date("m", strtotime("$month " . $this->getCurrentDate()["year"])));
+        }, $this->months);
     }
 
-    public function getDaysInCurrentMonths (array $months)
+    public function getDaysInCurrentMonths (array $months): array
     {
-        $res = [];
-        foreach ($months as $v) $res[] = cal_days_in_month(CAL_GREGORIAN, $v, $this->getCurrentDate()["year"]);
-        return $res;
+        return array_map(function($month) {
+            return cal_days_in_month(CAL_GREGORIAN, $month, $this->getCurrentDate()["year"]);
+        }, $months);
     }
 
-    public function getDayFirstWeekMonth (array $months)
+    public function getDayFirstWeekMonth (array $months): array
     {
-        $weeks = [];
-        foreach ($months as $v) $weeks[] = intval(date("w", strtotime("01"." $v ".$this->getCurrentDate()["year"])));
-        return $weeks;
+        return array_map(function($month) {
+            return intval(date("w", strtotime("01 $month " . $this->getCurrentDate()["year"])));
+        }, $months);
     }
 
 }

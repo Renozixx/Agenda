@@ -4,6 +4,10 @@ namespace App\Middlewares;
 
 use App\Controllers\SessionController;
 
+/**
+ * Classe middleware. Intercepta a requisição e trata-a
+ * conforme necessário
+ */
 class middleware extends SessionController {
     protected function OpenSession() : void {
         if(!isset($_SESSION)) {

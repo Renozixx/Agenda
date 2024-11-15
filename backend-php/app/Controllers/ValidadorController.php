@@ -1,52 +1,63 @@
 <?php
 namespace App\Controllers;
 
-// Esse validador serve para validar campos, se o cara colocar por exemplo, uma sena 12345, o que está fora dos nossos
-// parametros de segurança, 
+/**
+ * Classe que valida campos em geral.
+ * Ex: max de 3 carcteres, email, etc
+ */
 class ValidadorController {
     protected $msg = [];
     private $error;
 
-    public function validate ($valor)
+    /**
+     * Entrada para tratar os parâmetros passados
+     * @param array $valor Valores com o compo e regras paro o campo
+     */
+    public function validate (array $valor): array
     {
         foreach ($valor as $value => $rule)
         {
-            if (!is_array($value)) $this->processRule($value, $rule); // Verifica se o valor a ser validado não é um array
-            else
+            if (!is_array($value))
+            {
+                $this->processRule($value, $rule);
+            }else
             {
                 $this->msg[] = "Nenhum valor deve ser um array.";
                 $this->error = TRUE;
             }
         }
         
-        if ($this->error) return $this->msg;
+        return $this->error ? $this->msg : [];
     }
 
-    private function processRule ($valor, $rule)
+    /**
+     * Verificamos se existe mais de uma regra para um campo
+     */
+    private function processRule (string $valor, string $rule): void
     {
-        if (strstr($rule, ",")) // Verifica se existe mais de 1 regra de validação
+        $rules = strpos($rule, ",") !== false ? explode(",", $rule) : [$rule];
+        foreach ($rules as $vr)
         {
-            $rules = explode(",", $rule);
-
-            foreach ($rules as $kr => $vr)
-            {
-                $this->handleRule($valor, $vr);
-            }
-        }else $this->handleRule($valor, $rule); // Ou se há apena 1 regra de validação
+            $this->handleRule($valor, $vr);
+        }
     }
 
-    private function handleRule ($valor, $rule)
+    /**
+     * Verificamos se a regra pussui algum valor
+     */
+    private function handleRule (string $valor, string $rule): void
     {
-        if (strstr($rule, ":")) // Verifica se a regra possui algum valor
+        if (strpos($rule, ":") !== false)
         {
-            $rule = explode(":", $rule);
-            $validador = $rule[0];
-            $validadorValor = $rule[1];
+            [$validador, $validadorValor] = explode(":", $rule);
             $this->switchRules($valor, $validador, $validadorValor);
-        }else $this->switchRules($valor, $rule);
+        }else
+        {
+            $this->switchRules($valor, $rule);
+        }
     }
 
-    private function switchRules ($valor, $validador, $valueValidador="") // Método para exibir e tratar cada regra de validação. Aqui podemos criar diversas regras
+    private function switchRules (string $valor, string $validador, string $valueValidador = "")
     {
         switch ($validador)
         {
@@ -57,6 +68,7 @@ class ValidadorController {
                     $this->error = TRUE;
                 }
                 break;
+                
             case "max":
                 if (strlen($valor) > intval($valueValidador))
                 {
@@ -64,6 +76,7 @@ class ValidadorController {
                     $this->error = TRUE;
                 }
                 break;
+                
             case "str":
                 if (!is_string($valor))
                 {
@@ -71,6 +84,7 @@ class ValidadorController {
                     $this->error = TRUE;
                 }
                 break;
+                
             case "int":
                 if (!is_int($valor))
                 {
@@ -78,6 +92,7 @@ class ValidadorController {
                     $this->error = TRUE;
                 }
                 break;
+                
             case "mail":
                 if (!strstr($valor, "@"))
                 {
@@ -85,6 +100,7 @@ class ValidadorController {
                     $this->error = TRUE;
                 }
                 break;
+                
             case "required":
                 if (strlen($valor) == 0)
                 {
